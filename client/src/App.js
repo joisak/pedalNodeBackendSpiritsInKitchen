@@ -1,25 +1,59 @@
-import logo from './logo.svg';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import './App.css';
+import EditUser from './Users/EditUser';
+import UserView from './Users/UserView';
 
-function App() {
+const App = () => {
+  const [response, setResponse] = useState({});
+
+  useEffect(() => {
+    axios.get('saythatagain').then((res) => {
+      const response = res.data;
+      setResponse(response);
+    });
+    return () => {};
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <Provider store={store}>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to='/'>Home</Link>
+            </li>
+            <li>
+              <Link to='/about'>About</Link>
+            </li>
+            <li>
+              <Link to='/users'>Users</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* A <Switch> looks through its children <Route>s and
+          renders the first one that matches the current URL. */}
+        <Switch>
+          <Route path='/about'>
+            <p>About</p>
+          </Route>
+          <Route path='/users'>
+            <UserView />
+          </Route>
+          <Route exact path='/user/:id'>
+            <EditUser />
+          </Route>
+          <Route path='/'>
+            <p>home</p>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+    // </Provider>
   );
-}
+};
 
 export default App;
