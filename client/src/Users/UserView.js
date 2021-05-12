@@ -13,6 +13,7 @@ const UserView = () => {
   };
 
   const handleCallBack = () => {
+    console.log('yeah');
     fetchUsers();
   };
 

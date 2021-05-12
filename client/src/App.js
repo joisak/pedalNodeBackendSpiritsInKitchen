@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import './App.css';
 import EditUser from './Users/EditUser';
@@ -7,14 +6,6 @@ import UserView from './Users/UserView';
 
 const App = () => {
   const [response, setResponse] = useState({});
-
-  useEffect(() => {
-    axios.get('saythatagain').then((res) => {
-      const response = res.data;
-      setResponse(response);
-    });
-    return () => {};
-  }, []);
 
   return (
     // <Provider store={store}>

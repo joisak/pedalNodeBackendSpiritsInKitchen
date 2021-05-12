@@ -55,6 +55,32 @@ exports.findOne = (req, res) => {
   });
 };
 
+exports.updateUser = (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: 'content cant be empty...',
+    });
+  }
+
+  User.updateUser(req.params.userId, new User(req.body), (err, data) => {
+    if (err) {
+      if (err.kind == 'not_found') {
+        res.status(400).send({
+          message: '400 no user with',
+        });
+      } else {
+        res.status(500).send({
+          message: '500 error...',
+        });
+      }
+    } else {
+      res.status(200).send({
+        message: `SUcces updating user :) `,
+      });
+    }
+  });
+};
+
 exports.deleteUser = (req, res) => {
   User.deleteUser(req.params.userId, (err, data) => {
     if (err) {

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 
 const EditUser = () => {
   const [user, setUser] = useState([]);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   useEffect(() => {
     getUser();
   }, []);
@@ -15,12 +17,33 @@ const EditUser = () => {
     });
   };
 
+  const updateUser = () => {
+    let id = window.location.pathname.split('/').pop();
+    axios
+      .put('/user/' + id, { email: email, name: name })
+      .then((res) => console.log(res));
+  };
+
+  const getName = (name) => {
+    setName(name);
+  };
+  const getEmail = (email) => {
+    setEmail(email);
+  };
+
   return (
     <div>
       {user && (
         <div>
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
+          <input
+            placeholder={user.name}
+            onChange={(e) => getName(e.currentTarget.value)}
+          />
+          <input
+            placeholder={user.email}
+            onChange={(e) => getEmail(e.currentTarget.value)}
+          />
+          <button onClick={updateUser}>Ändra</button>
         </div>
       )}
     </div>

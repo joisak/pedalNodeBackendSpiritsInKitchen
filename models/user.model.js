@@ -18,6 +18,27 @@ User.create = (newUser, result) => {
   });
 };
 
+User.updateUser = (id, user, result) => {
+  sql.query(
+    'UPDATE users SET email = ?, name = ? WHERE id = ?',
+    [user.email, user.name, id],
+    (err, res) => {
+      if (err) {
+        console.log('Error', err);
+        result(null, err);
+        return;
+      }
+      if (res.affectedRows == 0) {
+        result({ kind: 'not_found' }, null);
+        return;
+      }
+
+      console.log('Update user :)');
+      result(null, res);
+    }
+  );
+};
+
 User.deleteUser = (userId, result) => {
   sql.query('DELETE FROM users WHERE id = ?', userId, (err, res) => {
     if (err) {
