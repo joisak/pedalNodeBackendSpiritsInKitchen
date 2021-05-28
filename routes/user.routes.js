@@ -6,6 +6,8 @@ module.exports = (app) => {
   // Retrieve all users
   app.get('/users', users.findAll);
 
+  app.post('/login', users.logIn);
+
   // Retrieve a single Customer with customerId
   app.get('/users/:userId', users.findOne);
 

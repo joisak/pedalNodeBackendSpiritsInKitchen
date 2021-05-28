@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const EditUser = () => {
+  let history = useHistory();
   const [user, setUser] = useState([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -19,9 +21,10 @@ const EditUser = () => {
 
   const updateUser = () => {
     let id = window.location.pathname.split('/').pop();
-    axios
-      .put('/user/' + id, { email: email, name: name })
-      .then((res) => console.log(res));
+    axios.put('/user/' + id, { email: email, name: name }).then((res) => {
+      console.log('snopp ', res);
+      history.push('/users');
+    });
   };
 
   const getName = (name) => {

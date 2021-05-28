@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import './App.css';
+import Login from './Login/Login';
 import EditUser from './Users/EditUser';
 import UserView from './Users/UserView';
 
@@ -13,6 +14,9 @@ const App = () => {
       <div>
         <nav>
           <ul>
+            <li>
+              <Link to='/login'>Login</Link>
+            </li>
             <li>
               <Link to='/'>Home</Link>
             </li>
@@ -30,6 +34,9 @@ const App = () => {
         <Switch>
           <Route path='/about'>
             <p>About</p>
+          </Route>
+          <Route path='/login'>
+            <Login />
           </Route>
           <Route path='/users'>
             <UserView />

@@ -38,6 +38,27 @@ exports.findAll = (req, res) => {
   });
 };
 
+exports.logIn = (req, res) => {
+  console.log('req body: ', req.body);
+  User.logIn(new User(req.body), (err, data) => {
+    if (err) {
+      if (err.kind == 'not_found') {
+        res.status(400).send({
+          message: '400 no user with',
+        });
+      } else {
+        res.status(500).send({
+          message: '500 error...',
+        });
+      }
+    } else {
+      res.status(200).send({
+        message: `SUcces updating user :) `,
+      });
+    }
+  });
+};
+
 // Find a single Customer with a customerId
 exports.findOne = (req, res) => {
   User.findById(req.params.userId, (err, data) => {

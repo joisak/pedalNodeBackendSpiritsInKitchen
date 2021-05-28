@@ -72,6 +72,27 @@ User.findById = function (userId, result) {
   });
 };
 
+User.logIn = function (user, result) {
+  sql.query(
+    'SELECT * FROM users WHERE name = ? AND email = ?',
+    [user.name, user.email],
+    (err, res) => {
+      if (err) {
+        console.log('Error', err);
+        result(null, err);
+        return;
+      }
+      if (res.affectedRows == 0) {
+        result({ kind: 'not_found' }, null);
+        return;
+      }
+      console.log('Update user :)', user.name, user.email);
+      console.log(res);
+      result(null, res);
+    }
+  );
+};
+
 User.findAll = (result) => {
   sql.query('SELECT * FROM users', (err, res) => {
     if (err) {
